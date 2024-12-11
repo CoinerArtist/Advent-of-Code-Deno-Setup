@@ -72,7 +72,7 @@ export async function submitAnswer(year: number, day: number, answer: string, pa
 
     const text = match[1]
         .replaceAll(/<\/?article>|<\/?p>|<\/?a.*?>|<\/?span.*?>/g, "")
-        .replaceAll(/You can \[Shareon[\s\S]*/, "")
+        .replaceAll(/You can \[Shareon[\s\S]*/g, "")
         .replaceAll(/  +/g, "\n").trim()
 
     return `\n${text}\n`
