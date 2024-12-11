@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "aoc": "deno --allow-read --allow-write --allow-net --allow-run ./src/aoc/aoc.ts"
+  },
+  "imports": {
+    "@std/fmt": "jsr:@std/fmt@^1.0.3",
+    "@std/fs": "jsr:@std/fs@^1.0.6",
+    "@std/io": "jsr:@std/io@^0.225.0",
+    "utility": "./src/utility/index.ts"
+  }
+}
