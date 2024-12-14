@@ -25,7 +25,7 @@ export async function getPuzzle(year: number, day: number, session: string){
         .replaceAll(/<\/p>|<\/ul>|<article class="day-desc">/g, "\n")
         .replaceAll(/<code><a href="(.+?)".*?>(.+?)<\/a><\/code>/g, "[`$2`]($1)")
         .replaceAll(/<a href="(.+?)".*?>(.+?)<\/a>/g, "[$2]($1)")
-        .replaceAll(/<pre><code>|<\/code><\/pre>/g, "```\n")
+        .replaceAll(/\n?<pre><code>|\n?<\/code><\/pre>/g, "\n```\n")
         .replaceAll(/<\/h2>/g, "\n----------\n\n")
         .replaceAll(/<\/?em.*?>/g, "*")
         .replaceAll(/<\/?code>/g, "`")
