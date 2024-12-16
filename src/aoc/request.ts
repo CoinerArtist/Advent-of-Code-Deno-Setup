@@ -21,19 +21,20 @@ export async function getPuzzle(year: number, day: number, session: string){
     const puzzleHTML = match[1]
 
     const puzzleMD = puzzleHTML
-        .replaceAll(/<p>|<\/li>|<ul>|<\/article>|<\/?span.*?>|<p class="day-success">[\s\S]+?<\/p>|<style>[\s\S]+?<\/style>/g, "")
-        .replaceAll(/<\/p>|<\/ul>|<article class="day-desc">/g, "\n")
-        .replaceAll(/<code><a href="(.+?)".*?>(.+?)<\/a><\/code>/g, "[`$2`]($1)")
-        .replaceAll(/<a href="(.+?)".*?>(.+?)<\/a>/g, "[$2]($1)")
-        .replaceAll(/\n?<pre><code>|\n?<\/code><\/pre>/g, "\n```\n")
-        .replaceAll(/<\/h2>/g, "\n----------\n\n")
-        .replaceAll(/<\/?em.*?>/g, "*")
-        .replaceAll(/<\/?code>/g, "`")
-        .replaceAll(/<h2.*?>/g, "\\")
-        .replaceAll(/<li>/g, "* ")
-        .replaceAll(/&lt;/g, "<").replaceAll(/&gt;/g, ">")
-        .replaceAll(/(To begin, \[get your puzzle input\]|<form method="post"|At this point, you should \[return to your Advent calendar\]|At this point, all that is left is for you to \[admire your Advent calendar\])[\s\S]+/g, "")
-        .replaceAll(/\n\n\n+/g, "\n\n").replaceAll(/  +/g, " ").trim()
+    .replaceAll(/<p>|<\/li>|<ul>|<\/article>|<\/?span.*?>|<p class="day-success">[\s\S]+?<\/p>|<style>[\s\S]+?<\/style>/g, "")
+    .replaceAll(/<\/p>|<\/ul>|<article class="day-desc">/g, "\n")
+    .replaceAll(/<code><a href="(.+?)".*?>(.+?)<\/a><\/code>/g, "[`$2`]($1)")
+    .replaceAll(/<a href="(.+?)".*?>(.+?)<\/a>/g, "[$2]($1)")
+    .replaceAll(/<\/h2>/g, "\n----------\n\n")
+    .replaceAll(/\n?<pre><code>([\s\S]+?)<\/code><\/pre>/g, (_, str) => "\n```\n" + str.replaceAll(/<\/?em>/g, "").trim() + "\n```\n")
+    .replaceAll(/<code><em>(.+?)<\/em><\/code>/g, "**`$1`**")
+    .replaceAll(/<\/?em.*?>/g, "*")
+    .replaceAll(/<\/?code>/g, "`")
+    .replaceAll(/<h2.*?>/g, "\\")
+    .replaceAll(/<li>/g, "* ")
+    .replaceAll(/(To begin, \[get your puzzle input\]|<form method="post"|At this point, you should \[return to your Advent calendar\]|At this point, all that is left is for you to \[admire your Advent calendar\])[\s\S]+/g, "")
+    .replaceAll(/&lt;/g, "<").replaceAll(/&gt;/g, ">")
+    .replaceAll(/\n\n\n+/g, "\n\n").replaceAll(/  +/g, " ").trim()
 
     return puzzleMD
 }
