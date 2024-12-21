@@ -26,7 +26,7 @@ export async function getPuzzle(year: number, day: number, session: string){
     .replaceAll(/<code><a href="(.+?)".*?>(.+?)<\/a><\/code>/g, "[`$2`]($1)")
     .replaceAll(/<a href="(.+?)".*?>(.+?)<\/a>/g, "[$2]($1)")
     .replaceAll(/<\/h2>/g, "\n----------\n\n")
-    .replaceAll(/\n?<pre><code>([\s\S]+?)<\/code><\/pre>/g, (_, str) => "\n```\n" + str.replaceAll(/<\/?em>/g, "").trim() + "\n```\n")
+    .replaceAll(/\n?<pre><code>([\s\S]+?)<\/code><\/pre>/g, (_, str) => "\n```\n" + str.replaceAll(/<\/?em>/g, "").trimEnd() + "\n```\n")
     .replaceAll(/<code><em>(.+?)<\/em><\/code>/g, "**`$1`**")
     .replaceAll(/<\/?em.*?>/g, "*")
     .replaceAll(/<\/?code>/g, "`")
@@ -34,7 +34,9 @@ export async function getPuzzle(year: number, day: number, session: string){
     .replaceAll(/<li>/g, "* ")
     .replaceAll(/(To begin, \[get your puzzle input\]|<form method="post"|At this point, you should \[return to your Advent calendar\]|At this point, all that is left is for you to \[admire your Advent calendar\])[\s\S]+/g, "")
     .replaceAll(/&lt;/g, "<").replaceAll(/&gt;/g, ">")
-    .replaceAll(/\n\n\n+/g, "\n\n").replaceAll(/  +/g, " ").trim()
+    .replaceAll(/\n\n\n+/g, "\n\n")
+    .replaceAll(/```([\s\S]+?)```|  +/g, (str, group) => group === undefined ? " " : str)
+    .trim()
 
     return puzzleMD
 }
