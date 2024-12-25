@@ -32,7 +32,7 @@ export async function getPuzzle(year: number, day: number, session: string){
     .replaceAll(/<\/?code>/g, "`")
     .replaceAll(/<h2.*?>/g, "\\")
     .replaceAll(/<li>/g, "* ")
-    .replaceAll(/(To begin, \[get your puzzle input\]|<form method="post"|At this point, you should \[return to your Advent calendar\]|At this point, all that is left is for you to \[admire your Advent calendar\])[\s\S]+/g, "")
+    .replaceAll(/(To begin, \[get your puzzle input\]|<form method="post"|At this point, you should \[return to your Advent calendar\]|At this point, all that is left is for you to \[admire your Advent calendar\]|Although it hasn't changed, you can still \[get your puzzle input\])[\s\S]+/g, "")
     .replaceAll(/&lt;/g, "<").replaceAll(/&gt;/g, ">")
     .replaceAll(/\n\n\n+/g, "\n\n")
     .replaceAll(/```([\s\S]+?)```|  +/g, (str, group) => group === undefined ? " " : str)
