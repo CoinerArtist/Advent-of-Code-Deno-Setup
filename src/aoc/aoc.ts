@@ -41,7 +41,7 @@ async function run(year: number, day: number){
     Deno.exit(code)
 }
 
-async function submit(year: number, day: number){
+async function submit(year: number, day: number, part: number){
     if(!existsSync(`./${year}/${day}/output.txt`)){
         console.error(red("output.txt not found."))
         Deno.exit(1)
@@ -55,7 +55,7 @@ async function submit(year: number, day: number){
         Deno.exit(1)
     }
 
-    const part = output.length
+    part = part || output.length
     const answer = output[part - 1]
 
     console.log(`Submitted : ${answer}`)
@@ -70,7 +70,7 @@ async function submit(year: number, day: number){
 
 // --- Main --- //
 
-const command: Record<string, (year: number, day: number) => void> = { create, run, submit, c: create, r: run, s: submit }
+const command: Record<string, (year: number, day: number, part:number) => void> = { create, run, submit, c: create, r: run, s: submit }
 
 function help(){
     console.log(red("Invalid command. Look at README.md"))
@@ -79,18 +79,18 @@ function help(){
 if(Deno.args.length === 0){
     help()
 } else if(Deno.args.length === 1){
-    const [ cmd ] = Deno.args 
-    if(command[cmd]) command[cmd](toyear, today)
+    const [cmd] = Deno.args 
+    if(command[cmd]) command[cmd](toyear, today, 0)
     else help()
 } else {
-    if(Deno.args.length > 3){
+    if(Deno.args.length > 4){
         help()
     } else if(command[Deno.args[0]]){
-        const [cmd, year, day] = Deno.args
-        command[cmd](parseInt(year), parseInt(day))
+        const [cmd, year, day, part] = Deno.args
+        command[cmd](parseInt(year), parseInt(day), parseInt(part))
     } else {
-        const [year, day, cmd] = Deno.args
-        if(command[cmd]) command[cmd](parseInt(year), parseInt(day))
+        const [year, day, cmd, part] = Deno.args
+        if(command[cmd]) command[cmd](parseInt(year), parseInt(day), parseInt(part))
         else help()
     }
 }
